@@ -93,37 +93,31 @@ All judges start with default password `ProTech@2026`.
 ## Features
 
 ### For Judges
-# ProTech 2026 Judge Portal (Updated)
+# ProTech 2026: True Monolith (One-Click Deploy)
 
-This is the fully localized and database-driven version of the ProTech 2026 Judge Portal.
+This is the all-in-one version of the ProTech 2026 Judge Portal, designed for easy deployment on **Railway.app**.
 
-## key Features
--   **Database Driven**: Everything (Judges, Teams, Scores) is stored in a local MongoDB (`protech2026`).
--   **New Themes & Judges**: Updated to match the latest event requirements (22 Judges, 6 Themes).
--   **New Rubrics (R1-R6)**: Evaluation criteria updated to a total of 100 marks.
--   **Team Manager**: Admin can now Add/Edit/Delete teams directly through the "Teams" tab in the Admin Panel.
+## 🚀 One-Click Deployment on Railway
+1. **Connect**: Create a new project on Railway and connect this repository (`P2`).
+2. **Persistence (CRITICAL)**: Go to **Settings** → **Volumes** → **Add Volume**.
+   - **Mount Path**: `/data/db`
+   - *Without this, your team/score data will be lost if the server restarts.*
+3. **Domain**: Railway will automatically generate a public URL for you. Go to **Settings** → **Public Networking** to see it.
 
-## Local Setup
-1.  **MongoDB**: Ensure MongoDB is running on `127.0.0.1:27017`.
-2.  **Environment**: Update `.env` with your local IP and MongoDB URI.
-3.  **Install & Run**:
-    ```bash
-    npm install
-    npm run dev
-    ```
-4.  **Seed Data**: Reset or populate the database anytime by running:
-    ```bash
-    node seed.js
-    ```
+## ✨ Features
+- **Zero-Config Database**: MongoDB runs inside the same container. No Atlas required!
+- **Auto-Seeding**: The first time you open the site, it automatically loads the 22 judges and initial teams.
+- **Team Manager**: Add, Edit, and Delete teams directly from the **Admin Panel** → **Teams** tab.
 
-## Authentication
--   **Admin**: `protech_admin` / `Admin@ProTech2026!`
--   **Judges**: `judge01` - `judge22` / Default Pwd: `ProTech@2026` / (Use Secret Key for first login).
+## 🔑 Authentication
+- **Admin**: `protech_admin` / `Admin@ProTech2026!`
+- **Judges**: `judge01` - `judge22` / Default Pwd: `ProTech@2026`
 
-## Deployment (Planned)
--   **Frontend**: Vercel
--   **Backend**: Render
--   **DB**: MongoDB Atlas
+## 🛠 Tech Stack
+- **Frontend**: React (served via Express)
+- **Backend**: Node.js / Express
+- **Database**: MongoDB (Local Instance inside Container)
+- **Deployment**: Docker / Railway
 
 ---
 

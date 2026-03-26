@@ -68,6 +68,26 @@ app.use((err, _req, res, _next) => {
 async function bootstrap() {
   await connectDatabase();
 
+  // ─── Auto-Seed if empty ────────────────────────────────────────────────────
+  const count = await AppState.countDocuments();
+  if (count === 0) {
+    console.log('Database is empty. Auto-seeding initial data...');
+    const { JUDGES_INITIAL } = require('./data/constants');
+    const participantsRaw = require('./data/participants_raw.json');
+    
+    await AppState.create({
+      _id: 'main',
+      data: {
+        judges: JUDGES_INITIAL,
+        participants: participantsRaw,
+        scores: {},
+        flags: {},
+        passwords: {}
+      }
+    });
+    console.log('✓ Auto-seeding complete.');
+  }
+
   app.listen(PORT, () => {
     console.log(`API listening on http://localhost:${PORT}`);
   });
