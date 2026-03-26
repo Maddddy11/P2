@@ -68,15 +68,15 @@ export default function App() {
     if (isAdmin) {
       switch (view) {
         case 'admin':
-          return <AdminPanel store={store} addJudge={addJudge} updateJudge={updateJudge} deleteJudge={deleteJudge} clearAll={clearAll} showToast={showToast} />;
+          return <AdminPanel store={store} update={update} addJudge={addJudge} updateJudge={updateJudge} deleteJudge={deleteJudge} clearAll={clearAll} showToast={showToast} />;
         case 'all_scores':
-          return <AdminPanel store={store} addJudge={addJudge} updateJudge={updateJudge} deleteJudge={deleteJudge} clearAll={clearAll} showToast={showToast} defaultTab="scores" />;
+          return <AdminPanel store={store} update={update} addJudge={addJudge} updateJudge={updateJudge} deleteJudge={deleteJudge} clearAll={clearAll} showToast={showToast} defaultTab="scores" />;
         case 'leaderboard':
           return <LeaderboardPage store={store} />;
         case 'rubrics':
           return <RubricsPage />;
         default:
-          return <AdminPanel store={store} addJudge={addJudge} updateJudge={updateJudge} deleteJudge={deleteJudge} clearAll={clearAll} showToast={showToast} />;
+          return <AdminPanel store={store} update={update} addJudge={addJudge} updateJudge={updateJudge} deleteJudge={deleteJudge} clearAll={clearAll} showToast={showToast} />;
       }
     }
 

@@ -93,23 +93,37 @@ All judges start with default password `ProTech@2026`.
 ## Features
 
 ### For Judges
-- Secure login with mandatory first-time password reset using secret key
-- View only groups assigned to their theme (theme-scoped access)
-- 8-criteria sliding evaluation form (totals 100 marks)
-- Animated live score total updating in real time
-- Flag groups for later review (tie resolution)
-- View flagged groups in a dedicated tab
-- View live leaderboard for their theme
-- Reference rubrics with performance bands
+# ProTech 2026 Judge Portal (Updated)
 
-### For Admin
-- View all themes' scoring progress at a glance
-- Manage judge roster: add, edit, remove judges
-- View all submitted scores; filter by theme
-- Export all results to CSV
-- View all flagged groups across themes
-- Access credentials table for all judges
-- Clear all scores (with confirmation)
+This is the fully localized and database-driven version of the ProTech 2026 Judge Portal.
+
+## key Features
+-   **Database Driven**: Everything (Judges, Teams, Scores) is stored in a local MongoDB (`protech2026`).
+-   **New Themes & Judges**: Updated to match the latest event requirements (22 Judges, 6 Themes).
+-   **New Rubrics (R1-R6)**: Evaluation criteria updated to a total of 100 marks.
+-   **Team Manager**: Admin can now Add/Edit/Delete teams directly through the "Teams" tab in the Admin Panel.
+
+## Local Setup
+1.  **MongoDB**: Ensure MongoDB is running on `127.0.0.1:27017`.
+2.  **Environment**: Update `.env` with your local IP and MongoDB URI.
+3.  **Install & Run**:
+    ```bash
+    npm install
+    npm run dev
+    ```
+4.  **Seed Data**: Reset or populate the database anytime by running:
+    ```bash
+    node seed.js
+    ```
+
+## Authentication
+-   **Admin**: `protech_admin` / `Admin@ProTech2026!`
+-   **Judges**: `judge01` - `judge22` / Default Pwd: `ProTech@2026` / (Use Secret Key for first login).
+
+## Deployment (Planned)
+-   **Frontend**: Vercel
+-   **Backend**: Render
+-   **DB**: MongoDB Atlas
 
 ---
 

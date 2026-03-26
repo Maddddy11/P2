@@ -65,15 +65,80 @@ function JudgeModal({ judge, onSave, onClose }) {
   );
 }
 
+// ─── Add/Edit Team Modal ────────────────────────────────────────────────────
+function TeamModal({ team, onSave, onClose }) {
+  const isEdit = !!team;
+  const [form, setForm] = useState(team || {
+    group_num: '',
+    project_title: '',
+    theme_code: 'MECV',
+    leader: '',
+    institute: 'SIT Pune',
+    category: 'Engineering'
+  });
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  return (
+    <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="modal-sheet" style={{ maxWidth: 480 }}>
+        <div className="modal-header">
+          <div style={{ fontFamily: 'Space Grotesk', fontWeight: 800, fontSize: 17, color: '#001524' }}>
+            {isEdit ? 'Edit Team' : 'Add New Team'}
+          </div>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-body">
+          {[
+            ['Group No.', 'group_num', 'text', 'G01'],
+            ['Project Title', 'project_title', 'text', 'Project Name'],
+            ['Team Leader', 'leader', 'text', 'Full Name'],
+            ['Institute', 'institute', 'text', 'SIT Pune'],
+          ].map(([label, key, type, ph]) => (
+            <div key={key} style={{ marginBottom: 16 }}>
+              <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: '#5a3f3f', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.07em' }}>{label}</label>
+              <input className="input" type={type} placeholder={ph} value={form[key] || ''} onChange={e => set(key, e.target.value)} style={{ fontSize: 14 }} />
+            </div>
+          ))}
+
+          <div style={{ marginBottom: 22 }}>
+            <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: '#5a3f3f', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.07em' }}>Theme</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {THEMES.map(t => (
+                <button key={t.code} type="button" onClick={() => set('theme_code', t.code)} style={{
+                  padding: '9px 16px', borderRadius: 999, border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 700,
+                  fontFamily: 'Plus Jakarta Sans, sans-serif',
+                  background: form.theme_code === t.code ? t.bg : 'rgba(0,21,36,0.04)',
+                  color: form.theme_code === t.code ? t.color : '#5a3f3f',
+                  borderWidth: 1, borderStyle: 'solid',
+                  borderColor: form.theme_code === t.code ? t.border : 'rgba(0,21,36,0.1)',
+                  transition: 'all 0.3s',
+                }}>
+                  {t.icon} {t.code}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button className="btn btn-primary" style={{ width: '100%', padding: '16px', fontSize: 15, fontWeight: 700, borderRadius: 18 }} onClick={() => { onSave(form); onClose(); }}>
+            {isEdit ? '✓ Update Team' : '+ Add Team'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Panel ────────────────────────────────────────────────────────
-export default function AdminPanel({ store, addJudge, updateJudge, deleteJudge, clearAll, showToast }) {
+export default function AdminPanel({ store, update, addJudge, updateJudge, deleteJudge, clearAll, showToast }) {
   const [tab, setTab] = useState('overview');
   const [judgeModal, setJudgeModal] = useState(null); // null | 'add' | judgeObj
+  const [teamModal, setTeamModal] = useState(null); // null | 'add' | teamObj
   const [filterTheme, setFilterTheme] = useState('all');
 
   const scores = store.scores || {};
   const flags = store.flags || {};
   const judges = store.judges || JUDGES_INITIAL;
+  const participants = store.participants || [];
 
   const allScored = (store.participants || []).filter(g => !!scores[g.group_num]);
   const allFlagged = (store.participants || []).filter(g => !!flags[g.group_num]);
@@ -110,6 +175,7 @@ export default function AdminPanel({ store, addJudge, updateJudge, deleteJudge, 
   const tabs = [
     { key: 'overview', label: 'Overview', icon: '⊞' },
     { key: 'judges', label: 'Judges', icon: '👤' },
+    { key: 'teams', label: 'Teams', icon: '👥' },
     { key: 'scores', label: 'Scores', icon: '📋' },
     { key: 'flagged', label: `Flags${allFlagged.length ? ` (${allFlagged.length})` : ''}`, icon: '🚩' },
     { key: 'credentials', label: 'Creds', icon: '🔑' },
@@ -185,6 +251,42 @@ export default function AdminPanel({ store, addJudge, updateJudge, deleteJudge, 
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* ── TEAMS ────────────────────────────────────────────────── */}
+      {tab === 'teams' && (
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <div className="sec-label">Participant Teams · {participants.length}</div>
+            <button className="btn btn-primary btn-sm" onClick={() => setTeamModal('add')}>+ Add Team</button>
+          </div>
+          {participants.map((p, i) => {
+            const theme = THEME_BY_CODE[p.theme_code];
+            return (
+              <div key={p.group_num} className={`anim-fadeUp stagger-${(i % 4) + 1}`} style={{
+                background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.6)',
+                borderRadius: 16, padding: '14px 16px', marginBottom: 10,
+                display: 'flex', alignItems: 'center', gap: 12,
+                boxShadow: '4px 4px 12px rgba(0,21,36,0.04), -3px -3px 10px rgba(255,255,255,0.8)',
+              }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: 14, marginBottom: 3, color: '#001524' }}>{p.group_num} · {p.project_title}</div>
+                  <div style={{ fontSize: 12, color: '#5a3f3f', marginBottom: 6 }}>{p.leader} · {p.institute}</div>
+                  {theme && <span className="badge" style={{ background: theme.bg, color: theme.color, borderColor: theme.border, fontSize: 11 }}>{theme.icon} {theme.code}</span>}
+                </div>
+                <div style={{ flexShrink: 0, display: 'flex', gap: 8 }}>
+                  <button className="btn btn-ghost btn-xs" onClick={() => setTeamModal(p)}>✎</button>
+                  <button className="btn btn-danger btn-xs" onClick={() => { 
+                    if (window.confirm(`Delete Team ${p.group_num}?`)) {
+                      update(s => ({ ...s, participants: s.participants.filter(x => x.group_num !== p.group_num) }));
+                      showToast('Team removed', 'warn');
+                    }
+                  }}>✕</button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
 
@@ -385,6 +487,29 @@ export default function AdminPanel({ store, addJudge, updateJudge, deleteJudge, 
             else { updateJudge(j.id, j); showToast('Judge updated', 'success'); }
           }}
           onClose={() => setJudgeModal(null)}
+        />
+      )}
+
+      {/* Team modal */}
+      {teamModal && (
+        <TeamModal
+          team={teamModal === 'add' ? null : teamModal}
+          onSave={p => {
+            const theme = THEMES.find(t => t.code === p.theme_code);
+            const teamWithTheme = { ...p, theme_full: theme ? theme.full : '' };
+            
+            if (teamModal === 'add') {
+              update(s => ({ ...s, participants: [...(s.participants || []), teamWithTheme] }));
+              showToast(`Team ${p.group_num} added`, 'success');
+            } else {
+              update(s => ({
+                ...s,
+                participants: s.participants.map(x => x.group_num === p.group_num ? teamWithTheme : x)
+              }));
+              showToast('Team updated', 'success');
+            }
+          }}
+          onClose={() => setTeamModal(null)}
         />
       )}
     </div>
