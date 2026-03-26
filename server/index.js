@@ -2,14 +2,12 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const { connectDatabase } = require('./db');
-const AppState = require('./models/AppState');
+const path = require('path');
+const { connectDatabase, getStore, updateStore } = require('./db');
 
 const app = express();
 const PORT = process.env.BACKEND_PORT || process.env.PORT || 5000;
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || '*';
-
-const path = require('path');
 
 app.use(
   cors({
@@ -20,36 +18,20 @@ app.use(express.json({ limit: '1mb' }));
 
 // ─── API Routes ──────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, service: 'protech-api' });
+  res.json({ ok: true, database: 'json-file' });
 });
 
-app.get('/api/store', async (_req, res) => {
-  const doc = await AppState.findById('main').lean();
-  res.json(doc?.data || {});
+app.get('/api/store', (req, res) => {
+  res.json(getStore());
 });
 
-app.put('/api/store', async (req, res) => {
+app.put('/api/store', (req, res) => {
   const payload = req.body;
-
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
-    return res.status(400).json({ error: 'Store payload must be an object.' });
+    return res.status(400).json({ error: 'Payload must be an object' });
   }
-
-  const doc = await AppState.findByIdAndUpdate(
-    'main',
-    {
-      $set: {
-        data: payload,
-      },
-    },
-    {
-      new: true,
-      upsert: true,
-      setDefaultsOnInsert: true,
-    }
-  ).lean();
-
-  return res.json(doc.data || {});
+  updateStore(payload);
+  res.json(payload);
 });
 
 // ─── Static Frontend (Production) ───────────────────────────────────────────
@@ -69,27 +51,24 @@ async function bootstrap() {
   await connectDatabase();
 
   // ─── Auto-Seed if empty ────────────────────────────────────────────────────
-  const count = await AppState.countDocuments();
-  if (count === 0) {
-    console.log('Database is empty. Auto-seeding initial data...');
+  const current = getStore();
+  if (!current || Object.keys(current).length === 0) {
+    console.log('Database empty. Auto-seeding initial data...');
     const { JUDGES_INITIAL } = require('./data/constants');
     const participantsRaw = require('./data/participants_raw.json');
     
-    await AppState.create({
-      _id: 'main',
-      data: {
-        judges: JUDGES_INITIAL,
-        participants: participantsRaw,
-        scores: {},
-        flags: {},
-        passwords: {}
-      }
+    updateStore({
+      judges: JUDGES_INITIAL,
+      participants: participantsRaw,
+      scores: {},
+      flags: {},
+      passwords: {}
     });
     console.log('✓ Auto-seeding complete.');
   }
 
   app.listen(PORT, () => {
-    console.log(`API listening on http://localhost:${PORT}`);
+    console.log(`API listening on port ${PORT} (JSON Mode)`);
   });
 }
 
