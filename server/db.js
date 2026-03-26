@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DB_PATH = path.join(__dirname, '../db.json');
+const DB_PATH = path.join(__dirname, '../data/db.json');
 
 // Memory cache for performance
 let storeData = null;
