@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "group_num": "G1",
+    "project_title": "Generic Project 1",
+    "theme_code": "MECV",
+    "theme_full": "Design, Build & Optimize (MECV)",
+    "leader": "Team Leader 1",
+    "institute": "SIT Pune",
+    "category": "Engineering"
+  },
+  {
+    "id": 2,
+    "group_num": "G2",
+    "project_title": "Generic Project 2",
+    "theme_code": "RA",
+    "theme_full": "Automation, Robotics & Control for Societal Impact (RA)",
+    "leader": "Team Leader 2",
+    "institute": "SIT Pune",
+    "category": "Engineering"
+  },
+  {
+    "id": 3,
+    "group_num": "G3",
+    "project_title": "Generic Project 3",
+    "theme_code": "CSSDG",
+    "theme_full": "Secure, Reliable & Responsible Technology for SDGs (CSSDG)",
+    "leader": "Team Leader 3",
+    "institute": "SIT Pune",
+    "category": "Engineering"
+  },
+  {
+    "id": 4,
+    "group_num": "G4",
+    "project_title": "Generic Project 4",
+    "theme_code": "CSHealth",
+    "theme_full": "Inclusive Solutions: Health, Safety & Accessibility (CSHealth)",
+    "leader": "Team Leader 4",
+    "institute": "SIT Pune",
+    "category": "Engineering"
+  }
+]

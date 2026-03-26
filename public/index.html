@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e5f4ff" />
+    <meta name="description" content="ProTech 2026 — Judge Evaluation Portal, SIT Pune" />
+    <title>ProTech 2026 | Judge Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { font-size: 16px; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+      body {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #e5f4ff 0%, #ffe5ef 25%, #fff6e5 50%, #e9ebfc 75%, #f4f0f0 100%);
+        background-attachment: fixed;
+        background-size: 400% 400%;
+        animation: gradientFlow 20s ease infinite;
+        color: #001524;
+        min-height: 100vh;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      #root { min-height: 100vh; }
+
+      /* Scrollbar - Neumorphic */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: rgba(0,21,36,0.04); border-radius: 4px; }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #0095ff, #0077cc);
+        border-radius: 4px;
+        border: 2px solid rgba(255,255,255,0.3);
+      }
+      ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #0077cc, #005999); }
+
+      /* Smooth Slider - Neumorphic Style */
+      input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+        background: rgba(0,21,36,0.06);
+        box-shadow: inset 2px 2px 4px rgba(0,21,36,0.08), inset -2px -2px 4px rgba(255,255,255,0.9);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      input[type=range]:hover {
+        box-shadow: inset 2px 2px 4px rgba(0,21,36,0.1), inset -2px -2px 4px rgba(255,255,255,0.95);
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        background: linear-gradient(145deg, #ffffff, #e8ecf0);
+        border: 3px solid #0095ff;
+        box-shadow:
+          4px 4px 8px rgba(0,21,36,0.15),
+          -2px -2px 6px rgba(255,255,255,0.9),
+          0 0 0 4px rgba(0,149,255,0.15);
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      input[type=range]::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+        box-shadow:
+          6px 6px 12px rgba(0,21,36,0.18),
+          -3px -3px 8px rgba(255,255,255,0.95),
+          0 0 0 6px rgba(0,149,255,0.2);
+      }
+      input[type=range]::-webkit-slider-thumb:active {
+        transform: scale(1.15);
+        border-color: #0077cc;
+        box-shadow:
+          2px 2px 4px rgba(0,21,36,0.2),
+          -1px -1px 3px rgba(255,255,255,0.9),
+          0 0 0 8px rgba(0,149,255,0.25);
+      }
+      input[type=range]::-moz-range-thumb {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        background: linear-gradient(145deg, #ffffff, #e8ecf0);
+        border: 3px solid #0095ff;
+        box-shadow:
+          4px 4px 8px rgba(0,21,36,0.15),
+          -2px -2px 6px rgba(255,255,255,0.9);
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      input[type=range]::-moz-range-thumb:hover {
+        transform: scale(1.1);
+      }
+
+      /* Focus visible for accessibility */
+      :focus-visible {
+        outline: 2px solid #0095ff;
+        outline-offset: 2px;
+      }
+
+      /* Selection color */
+      ::selection {
+        background: rgba(0,149,255,0.25);
+        color: #001524;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
