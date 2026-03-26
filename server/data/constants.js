@@ -1,6 +1,6 @@
 // ─── THEMES ─────────────────────────────────────────────────────────────────
 // ─── THEMES ─────────────────────────────────────────────────────────────────
-export const THEMES = [
+const THEMES = [
   {
     code: 'MECV', id: 1,
     name: 'Design, Build & Optimize',
@@ -69,13 +69,13 @@ export const THEMES = [
   },
 ];
 
-export const THEME_BY_FULL = {};
+const THEME_BY_FULL = {};
 THEMES.forEach(t => { THEME_BY_FULL[t.full] = t; });
-export const THEME_BY_CODE = {};
+const THEME_BY_CODE = {};
 THEMES.forEach(t => { THEME_BY_CODE[t.code] = t; });
 
 // ─── SCORING CRITERIA ────────────────────────────────────────────────────────
-export const CRITERIA = [
+const CRITERIA = [
   {
     key: 'c1', label: 'R1: Prototype Model Completeness',
     max: 40, weight: 40,
@@ -144,10 +144,10 @@ export const CRITERIA = [
   },
 ];
 
-export const MAX_TOTAL = CRITERIA.reduce((s, c) => s + c.max, 0); // 100
+const MAX_TOTAL = CRITERIA.reduce((s, c) => s + c.max, 0); // 100
 
 // ─── JUDGES ─────────────────────────────────────────────────────────────
-export const JUDGES_INITIAL = [
+const JUDGES_INITIAL = [
   // AISense (T5)
   { id:'j1', name:'Dr. Hema Karande', username:'judge01', defaultPassword:'ProTech@2026', secret:'PT26-S1-9X2K', theme_code:'AISense' },
   { id:'j2', name:'Dr. Sagar Pande', username:'judge02', defaultPassword:'ProTech@2026', secret:'PT26-S2-3K9M', theme_code:'AISense' },
@@ -182,7 +182,7 @@ export const JUDGES_INITIAL = [
 ];
 
 // Admin credentials
-export const ADMIN_CREDS = {
+const ADMIN_CREDS = {
   username: 'protech_admin',
   password: 'Admin@ProTech2026!',
   name: 'Event Coordinator',
@@ -190,4 +190,6 @@ export const ADMIN_CREDS = {
 };
 
 // Storage key - increment version to reset database (clears all scores, flags, and passwords)
-export const STORAGE_KEY = 'protech2026_v4_final';
+const STORAGE_KEY = 'protech2026_v4_final';
+
+module.exports = { THEMES, THEME_BY_FULL, THEME_BY_CODE, CRITERIA, MAX_TOTAL, JUDGES_INITIAL, ADMIN_CREDS, STORAGE_KEY };
