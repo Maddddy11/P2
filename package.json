@@ -7,16 +7,16 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "server": "node server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm start\"",
-    "build": "react-scripts build"
+    "start": "node server/index.js",
+    "client": "react-scripts start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "react-scripts build",
+    "server": "node server/index.js"
   },
   "browserslist": {
     "production": [

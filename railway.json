@@ -9,6 +9,6 @@
     "restartPolicyType": "ON_FAILURE",
     "healthcheckPath": "/api/health",
     "healthcheckTimeout": 5,
-    "serviceName": "protech-monolith"
+    "serviceName": "protech-portal"
   }
 }
