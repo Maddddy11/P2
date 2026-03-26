@@ -12,7 +12,7 @@ echo "Waiting for MongoDB..."
 until mongosh --eval "db.adminCommand('ping')" > /dev/null 2>&1; do
   sleep 1
 done
-console.log("MongoDB is up!")
+echo "MongoDB is up!"
 
 # Start the Node.js application
 echo "Starting ProTech Server..."
